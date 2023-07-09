@@ -4,6 +4,8 @@ import Cards from './Cards';
 import { useState, useEffect } from "react";
 import { buscarColores, crearcolor } from '../helpers/queries'
 import { useForm } from 'react-hook-form'
+import Swal from 'sweetalert2';
+
 const AdministrarColores = () => {
     const { register, handleSubmit, formState: { errors }, reset, } = useForm();
     const [colores, setColores] = useState([]);
@@ -19,17 +21,14 @@ const AdministrarColores = () => {
     const guardar = (color) => {
         console.log(color)
         crearcolor(color).then((respuesta) => {
-            if (respuesta.status === 201) {
+            if (respuesta.status === 200) {
                 Swal.fire('Exito al cargar el color', "Se cargó su color a la BD", "success")
             } else {
                 Swal.fire('Error al cargar el color', "Ocurrió un error al cargar su color a la BD", "error")
             }
         })
     }
-    const borrarColor = (nombreColor) => {
-        let copiaColores = colores.filter((itemColor) => itemColor !== nombreColor);
-        setColores(copiaColores);
-    }
+
     useEffect(() => {
         cargar();
         }, []);
@@ -75,7 +74,7 @@ const AdministrarColores = () => {
                     (<div className='d-flex -justify-content-center'>
                         <Spinner variant='primary' animation='border'/>
                     </div>):
-                <Cards colores={colores} borrarColor={borrarColor}></Cards>
+                <Cards colores={colores}></Cards>
                     }
                 </Row>
             </Container>

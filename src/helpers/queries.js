@@ -25,3 +25,13 @@ export const crearcolor=async(color)=>{
         console.log(error);
     }
 }
+export const borrarColor=async(id)=>{
+    try{
+        const consulta = await fetch(URL_BORRAR+id,{
+            method:'DELETE',
+        })
+        return consulta;
+    }catch(error){
+        console.log(error);
+    }
+}
